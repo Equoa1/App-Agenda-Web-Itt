@@ -23,7 +23,7 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $table = 'usuariosweb';
+   
     protected $fillable = [
         'name',
         'email',
@@ -59,4 +59,10 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+     /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'usuariosweb';
 }
