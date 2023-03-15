@@ -33,6 +33,7 @@ class AuthController extends Controller
     {
        
         $rules = [
+            'folio' => 'required|string',
             'matricula' => 'required|string',
             'name' => 'required|string',
             'email' => 'required|string|unique:users',
@@ -44,6 +45,7 @@ class AuthController extends Controller
         }
        
         $user = User::create([
+            'folio' => $req->folio,
             'matricula' => $req->matricula,
             'name' => $req->name,
             'email' => $req->email,

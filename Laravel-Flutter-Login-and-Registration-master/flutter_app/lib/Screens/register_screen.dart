@@ -24,6 +24,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   String _matricula = '';
   String _password = '';
   String _name = '';
+  String _folio = '';
 
   createAccountPressed() async {
     bool emailValid = RegExp(
@@ -31,6 +32,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         .hasMatch(_email);
     if (emailValid) {
       http.Response response = await AuthServices.register(
+        _folio,
         _matricula,
         _name,
         _email,
@@ -71,6 +73,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           children: [
+            const SizedBox(
+              height: 20,
+            ),
+            TextField(
+              decoration: InputDecoration(
+                hintText: 'Folio',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+              ),
+              onChanged: (value) {
+                _folio = value;
+              },
+            ),
             const SizedBox(
               height: 20,
             ),

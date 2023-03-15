@@ -5,9 +5,10 @@ import 'package:flutterapp/Services/globals.dart';
 import 'package:http/http.dart' as http;
 
 class AuthServices {
-  static Future<http.Response> register(
-      String matricula, String name, String email, String password) async {
+  static Future<http.Response> register(String folio, String matricula,
+      String name, String email, String password) async {
     Map data = {
+      "folio": folio,
       "matricula": matricula,
       "name": name,
       "email": email,
