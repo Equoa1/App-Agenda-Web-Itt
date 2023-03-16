@@ -69,12 +69,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
           ),
         ),
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           children: [
             const SizedBox(
-              height: 20,
+              height: 25,
             ),
             TextField(
               decoration: InputDecoration(
@@ -92,7 +92,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             ),
             TextField(
               decoration: InputDecoration(
-                hintText: 'Matricula',
+                hintText: 'Numero De Control',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(30),
                 ),
@@ -145,7 +145,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               },
             ),
             const SizedBox(
-              height: 40,
+              height: 20,
             ),
             RoundedButton(
               btnText: 'Crear Cuenta',
