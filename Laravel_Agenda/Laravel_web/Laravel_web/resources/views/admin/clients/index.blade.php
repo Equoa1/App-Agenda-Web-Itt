@@ -29,12 +29,12 @@
                                 <th width="10">
                                   
                                 </th>
-                                <th>No</th>
+                                
                                 <th>Name</th>
-                                <th>Email</th>
-                                <th>Phone</th>
-                                <th>Photo</th>
-                                <th>Action</th>
+                                <th>Numero Control</th>
+                                <th>Fecha Examen</th>
+                                <th>Folio</th>
+                                
                             </tr>
                         </thead>
                         <tbody>
