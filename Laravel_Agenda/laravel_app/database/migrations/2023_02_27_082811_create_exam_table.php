@@ -17,7 +17,10 @@ class CreateExamTable extends Migration
           
             $table->integer('idexamen');
             $table->string('examendes');
-            $table->datetime('fechaexamen');
+            $table->date('fechaexamen');
+            $table->time('hora');
+            $table->integer('capacidad');
+            $table->string('profesor');
             $table->timestamps();
         });
     }
