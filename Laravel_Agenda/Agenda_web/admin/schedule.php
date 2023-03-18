@@ -230,7 +230,7 @@
                         
                         //
                     }else{
-                        $sqlmain= "select exam.idexamen,exam.examendes,profesores.nombre,exam.fechaexamen,exam.hora,exam.capacidad from exam inner join profesores on exam.profesores=profesores.proid order by exam.fechaexamen desc";
+                        $sqlmain= "select exam.idexamen,exam.examendes,profesores.nombre,exam.fechaexamen,exam.hora,exam.capacidad from exam inner join profesores on exam.profesor=profesores.proid order by exam.fechaexamen desc";
 
                     }
 
@@ -287,8 +287,8 @@
                                     <img src="../img/notfound.svg" width="25%">
                                     
                                     <br>
-                                    <p class="heading-main12" style="margin-left: 45px;font-size:20px;color:rgb(49, 49, 49)">We  couldnt find anything related to your keywords !</p>
-                                    <a class="non-style-link" href="schedule.php"><button  class="login-btn btn-primary-soft btn"  style="display: flex;justify-content: center;align-items: center;margin-left:20px;">&nbsp; Show all Sessions &nbsp;</font></button>
+                                    <p class="heading-main12" style="margin-left: 45px;font-size:20px;color:rgb(49, 49, 49)">¡No pudimos encontrar nada relacionado con sus palabras clave !</p>
+                                    <a class="non-style-link" href="schedule.php"><button  class="login-btn btn-primary-soft btn"  style="display: flex;justify-content: center;align-items: center;margin-left:20px;">&nbsp; Mostrar todo los horarios &nbsp;</font></button>
                                     </a>
                                     </center>
                                     <br><br><br><br>
@@ -304,7 +304,7 @@
                                     $docname=$row["nombre"];
                                     $scheduledate=$row["fechaexamen"];
                                     $scheduletime=$row["hora"];
-                                    $nop=$row["cantidad"];
+                                    $nop=$row["capacidad"];
                                     echo '<tr>
                                         <td> &nbsp;'.
                                         substr($title,0,30)
