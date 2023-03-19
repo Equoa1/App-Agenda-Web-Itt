@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-03-2023 a las 04:39:34
+-- Tiempo de generación: 19-03-2023 a las 22:43:32
 -- Versión del servidor: 10.4.21-MariaDB
 -- Versión de PHP: 8.0.10
 
@@ -88,7 +88,7 @@ CREATE TABLE `exam` (
   `fechaexamen` date NOT NULL,
   `hora` time NOT NULL,
   `capacidad` int(11) NOT NULL,
-  `profesor` int(255) NOT NULL,
+  `profesor` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -98,7 +98,8 @@ CREATE TABLE `exam` (
 --
 
 INSERT INTO `exam` (`idexamen`, `examendes`, `fechaexamen`, `hora`, `capacidad`, `profesor`, `created_at`, `updated_at`) VALUES
-(290022, 'Examen', '2023-03-17', '20:14:35', 20, 1, '2023-03-18 03:14:35', '2023-03-18 03:14:35');
+(1, 'Examen', '2023-03-21', '15:34:00', 20, '5', NULL, NULL),
+(2, 'Examen', '2023-03-21', '16:36:00', 20, '5', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -123,9 +124,11 @@ CREATE TABLE `failed_jobs` (
 --
 
 CREATE TABLE `inscripcion` (
-  `id` bigint(20) UNSIGNED NOT NULL,
+  `udi` int(11) NOT NULL,
+  `numerodecita` int(11) NOT NULL,
   `examen_id` int(11) NOT NULL,
   `usuario_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `fechaid` int(11) NOT NULL,
   `fecha_examen` datetime NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -152,13 +155,13 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (58, '2023_03_04_212103_create_usuarios_table', 2),
 (95, '2014_10_12_200000_add_two_factor_columns_to_users_table', 4),
 (99, '2023_03_15_104718_create_sessions_table', 5),
-(142, '2014_10_12_000000_create_users_table', 6),
-(143, '2014_10_12_100000_create_password_resets_table', 6),
-(144, '2019_08_19_000000_create_failed_jobs_table', 6),
-(145, '2019_12_14_000001_create_personal_access_tokens_table', 6),
-(146, '2023_02_27_082811_create_exam_table', 6),
-(147, '2023_02_28_083405_create_inscripcion_table', 6),
-(148, '2023_03_15_011647_create_users_table', 6);
+(163, '2014_10_12_000000_create_users_table', 6),
+(164, '2014_10_12_100000_create_password_resets_table', 6),
+(165, '2019_08_19_000000_create_failed_jobs_table', 6),
+(166, '2019_12_14_000001_create_personal_access_tokens_table', 6),
+(167, '2023_02_27_082811_create_exam_table', 6),
+(168, '2023_02_28_083405_create_inscripcion_table', 6),
+(169, '2023_03_15_011647_create_users_table', 6);
 
 -- --------------------------------------------------------
 
@@ -422,7 +425,7 @@ ALTER TABLE `doctor`
 -- Indices de la tabla `exam`
 --
 ALTER TABLE `exam`
-  ADD UNIQUE KEY `profesor` (`profesor`);
+  ADD PRIMARY KEY (`idexamen`);
 
 --
 -- Indices de la tabla `failed_jobs`
@@ -435,7 +438,7 @@ ALTER TABLE `failed_jobs`
 -- Indices de la tabla `inscripcion`
 --
 ALTER TABLE `inscripcion`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`examen_id`);
 
 --
 -- Indices de la tabla `migrations`
@@ -518,22 +521,22 @@ ALTER TABLE `doctor`
   MODIFY `docid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT de la tabla `exam`
+--
+ALTER TABLE `exam`
+  MODIFY `idexamen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT de la tabla `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `inscripcion`
---
-ALTER TABLE `inscripcion`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT de la tabla `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=149;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=170;
 
 --
 -- AUTO_INCREMENT de la tabla `patient`
