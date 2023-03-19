@@ -97,10 +97,10 @@
             <table border="0" width="100%" style=" border-spacing: 0;margin:0;padding:0;margin-top:25px; ">
                 <tr >
                     <td width="13%" >
-                    <a href="appointment.php" ><button  class="login-btn btn-primary-soft btn btn-icon-back"  style="padding-top:11px;padding-bottom:11px;margin-left:20px;width:125px"><font class="tn-in-text">Back</font></button></a>
+                    <a href="appointment.php" ><button  class="login-btn btn-primary-soft btn btn-icon-back"  style="padding-top:11px;padding-bottom:11px;margin-left:20px;width:125px"><font class="tn-in-text">Atras</font></button></a>
                     </td>
                     <td>
-                        <p style="font-size: 23px;padding-left:12px;font-weight: 600;">Appointment Manager</p>
+                        <p style="font-size: 23px;padding-left:12px;font-weight: 600;">Agendar Cita</p>
                                            
                     </td>
                     <td width="15%">
@@ -165,16 +165,16 @@
                         </td>
                         <td width="30%">
                         <select name="docid" id="" class="box filter-container-items" style="width:90% ;height: 37px;margin: 0;" >
-                            <option value="" disabled selected hidden>Choose Doctor Name from the list</option><br/>
+                            <option value="" disabled selected hidden>Escoger Profesor De La Lista</option><br/>
                                 
                             <?php 
                              
-                                $list11 = $database->query("select  * from  doctor order by docname asc;");
+                                $list11 = $database->query("select  * from  profesores order by nombre asc;");
 
                                 for ($y=0;$y<$list11->num_rows;$y++){
                                     $row00=$list11->fetch_assoc();
-                                    $sn=$row00["docname"];
-                                    $id00=$row00["docid"];
+                                    $sn=$row00["nombre"];
+                                    $id00=$row00["proid"];
                                     echo "<option value=".$id00.">$sn</option><br/>";
                                 };
 
@@ -202,18 +202,18 @@
                         $sqlpt1="";
                         if(!empty($_POST["sheduledate"])){
                             $sheduledate=$_POST["sheduledate"];
-                            $sqlpt1=" schedule.scheduledate='$sheduledate' ";
+                            $sqlpt1="exam.fechaexamen='$sheduledate' ";
                         }
 
 
                         $sqlpt2="";
                         if(!empty($_POST["docid"])){
                             $docid=$_POST["docid"];
-                            $sqlpt2=" doctor.docid=$docid ";
+                            $sqlpt2=" profesores.proid=$docid ";
                         }
                         //echo $sqlpt2;
                         //echo $sqlpt1;
-                        $sqlmain= "select appointment.appoid,schedule.scheduleid,schedule.title,doctor.docname,patient.pname,schedule.scheduledate,schedule.scheduletime,appointment.apponum,appointment.appodate from schedule inner join appointment on schedule.scheduleid=appointment.scheduleid inner join patient on patient.pid=appointment.pid inner join doctor on schedule.docid=doctor.docid";
+                        $sqlmain= "select inscripcion.examen_id,exam.idexamen,exam.examendes,profesores.nombre,users.name,exam.fechaexamen,exam.hora,inscripcion.numerodecita,inscripcion.fecha_examen from exam inner join inscripcion on exam.idexamen=inscripcion.examen_id inner join users on users.id=inscripcion.udi inner join profesores on exam.profesor=profesores.proid";
                         $sqllist=array($sqlpt1,$sqlpt2);
                         $sqlkeywords=array(" where "," and ");
                         $key2=0;
@@ -230,7 +230,7 @@
                         
                         //
                     }else{
-                        $sqlmain= "select appointment.appoid,schedule.scheduleid,schedule.title,doctor.docname,patient.pname,schedule.scheduledate,schedule.scheduletime,appointment.apponum,appointment.appodate from schedule inner join appointment on schedule.scheduleid=appointment.scheduleid inner join patient on patient.pid=appointment.pid inner join doctor on schedule.docid=doctor.docid  order by schedule.scheduledate desc";
+                        $sqlmain= "select inscripcion.examen_id,exam.idexamen,exam.examendes,profesores.nombre,users.name,exam.fechaexamen,exam.hora,inscripcion.numerodecita,inscripcion.fecha_examen from exam inner join inscripcion on exam.idexamen=inscripcion.examen_id inner join users on users.id=inscripcion.uid inner join profesores on exam.profesor=profesores.proid  order by exa.fechaexamen desc";
 
                     }
 
@@ -310,15 +310,15 @@
                                 else{
                                 for ( $x=0; $x<$result->num_rows;$x++){
                                     $row=$result->fetch_assoc();
-                                    $appoid=$row["appoid"];
-                                    $scheduleid=$row["scheduleid"];
-                                    $title=$row["title"];
-                                    $docname=$row["docname"];
-                                    $scheduledate=$row["scheduledate"];
-                                    $scheduletime=$row["scheduletime"];
-                                    $pname=$row["pname"];
-                                    $apponum=$row["apponum"];
-                                    $appodate=$row["appodate"];
+                                    $appoid=$row["examen_id"];
+                                    $scheduleid=$row["idexamen"];
+                                    $title=$row["examendes"];
+                                    $docname=$row["nombre"];
+                                    $scheduledate=$row["fechaexamen"];
+                                    $scheduletime=$row["hora"];
+                                    $pname=$row["name"];
+                                    $apponum=$row["numerodecita"];
+                                    $appodate=$row["fecha_examen"];
                                     echo '<tr >
                                         <td style="font-weight:600;"> &nbsp;'.
                                         
@@ -422,12 +422,12 @@
                                     <option value="" disabled selected hidden>Choose Doctor Name from the list</option><br/>';
                                         
         
-                                        $list11 = $database->query("select  * from  doctor;");
+                                        $list11 = $database->query("select  * from  profesores;");
         
                                         for ($y=0;$y<$list11->num_rows;$y++){
                                             $row00=$list11->fetch_assoc();
-                                            $sn=$row00["docname"];
-                                            $id00=$row00["docid"];
+                                            $sn=$row00["nombre"];
+                                            $id00=$row00["proid"];
                                             echo "<option value=".$id00.">$sn</option><br/>";
                                         };
         

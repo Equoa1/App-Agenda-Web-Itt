@@ -14,9 +14,12 @@ class CreateInscripcionTable extends Migration
     public function up()
     {
         Schema::create('inscripcion', function (Blueprint $table) {
-            $table->id()->primary;
+            
+            $table->integer('udi');
+            $table->integer('numerodecita');
             $table->integer('examen_id');
             $table->string('usuario_id');
+            $table->integer('fechaid');
             $table->datetime('fecha_examen');
 
             $table->timestamps();
