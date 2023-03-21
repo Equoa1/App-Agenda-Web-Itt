@@ -110,12 +110,12 @@
                         <p class="heading-sub12" style="padding: 0;margin: 0;">
                             <?php 
 
-                        date_default_timezone_set('Asia/Kolkata');
+                    date_default_timezone_set('America/Tijuana');
 
                         $today = date('Y-m-d');
                         echo $today;
 
-                        $list110 = $database->query("select  * from  appointment;");
+                        $list110 = $database->query("select  * from  inscripcion;");
 
                         ?>
                         </p>
@@ -139,7 +139,7 @@
                 <tr>
                     <td colspan="4" style="padding-top:10px;width: 100%;" >
                     
-                        <p class="heading-main12" style="margin-left: 45px;font-size:18px;color:rgb(49, 49, 49)">All Appointments (<?php echo $list110->num_rows; ?>)</p>
+                        <p class="heading-main12" style="margin-left: 45px;font-size:18px;color:rgb(49, 49, 49)">Citas (<?php echo $list110->num_rows; ?>)</p>
                     </td>
                     
                 </tr>
@@ -230,7 +230,7 @@
                         
                         //
                     }else{
-                        $sqlmain= "select inscripcion.examen_id,exam.idexamen,exam.examendes,profesores.nombre,users.name,exam.fechaexamen,exam.hora,inscripcion.numerodecita,inscripcion.fecha_examen from exam inner join inscripcion on exam.idexamen=inscripcion.examen_id inner join users on users.id=inscripcion.uid inner join profesores on exam.profesor=profesores.proid  order by exa.fechaexamen desc";
+                        $sqlmain= "select inscripcion.examen_id,exam.idexamen,exam.examendes,profesores.nombre,users.name,exam.fechaexamen,exam.hora,inscripcion.numerodecita,inscripcion.fecha_examen from exam inner join inscripcion on exam.idexamen=inscripcion.examen_id inner join users on users.id=inscripcion.udi inner join profesores on exam.profesor=profesores.proid  order by exam.fechaexamen desc";
 
                     }
 
@@ -535,18 +535,17 @@
             </div>
             '; 
         }elseif($action=='view'){
-            $sqlmain= "select * from doctor where docid='$id'";
+            $sqlmain= "select * from profesores where proid='$id'";
             $result= $database->query($sqlmain);
             $row=$result->fetch_assoc();
-            $name=$row["docname"];
-            $email=$row["docemail"];
-            $spe=$row["specialties"];
+            $name=$row["nombre"];
+            $email=$row["correo"];
+           
             
-            $spcil_res= $database->query("select sname from specialties where id='$spe'");
+          
             $spcil_array= $spcil_res->fetch_assoc();
-            $spcil_name=$spcil_array["sname"];
-            $nic=$row['docnic'];
-            $tele=$row['doctel'];
+            
+           
             echo '
             <div id="popup1" class="overlay">
                     <div class="popup">
@@ -593,32 +592,20 @@
                                     <label for="nic" class="form-label">NIC: </label>
                                 </td>
                             </tr>
-                            <tr>
-                                <td class="label-td" colspan="2">
-                                '.$nic.'<br><br>
-                                </td>
-                            </tr>
+                          
                             <tr>
                                 <td class="label-td" colspan="2">
                                     <label for="Tele" class="form-label">Telephone: </label>
                                 </td>
                             </tr>
-                            <tr>
-                                <td class="label-td" colspan="2">
-                                '.$tele.'<br><br>
-                                </td>
-                            </tr>
+                          
                             <tr>
                                 <td class="label-td" colspan="2">
                                     <label for="spec" class="form-label">Specialties: </label>
                                     
                                 </td>
                             </tr>
-                            <tr>
-                            <td class="label-td" colspan="2">
-                            '.$spcil_name.'<br><br>
-                            </td>
-                            </tr>
+                            
                             <tr>
                                 <td colspan="2">
                                     <a href="doctors.php"><input type="button" value="OK" class="login-btn btn-primary-soft btn" ></a>
