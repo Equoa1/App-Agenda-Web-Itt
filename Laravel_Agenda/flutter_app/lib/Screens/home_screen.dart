@@ -111,7 +111,8 @@ class _HomeScreenState extends State<HomeScreen> {
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Error ya estas inscrito al curso: $examId'),
+          content:
+              Text('La cuenta $username se encuentra inscrito a un examen'),
         ),
       );
     }

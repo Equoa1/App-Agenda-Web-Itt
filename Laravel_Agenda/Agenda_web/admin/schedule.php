@@ -508,20 +508,20 @@
             </div>
             '; 
         }elseif($action=='view'){
-            $sqlmain= "select schedule.scheduleid,schedule.title,doctor.docname,schedule.scheduledate,schedule.scheduletime,schedule.nop from schedule inner join doctor on schedule.docid=doctor.docid  where  schedule.scheduleid=$id";
+            $sqlmain= "select exam.idexamen,exam.examendes,profesores.nombre,exam.fechaexamen,exam.hora,exam.capacidad from exam inner join profesores on exam.profesor=profesores.proid  where  exam.idexamen=$id";
             $result= $database->query($sqlmain);
             $row=$result->fetch_assoc();
-            $docname=$row["docname"];
-            $scheduleid=$row["scheduleid"];
-            $title=$row["title"];
-            $scheduledate=$row["scheduledate"];
-            $scheduletime=$row["scheduletime"];
+            $docname=$row["nombre"];
+            $scheduleid=$row["idexamen"];
+            $title=$row["examendes"];
+            $scheduledate=$row["fechaexamen"];
+            $scheduletime=$row["hora"];
             
            
-            $nop=$row['nop'];
+            $nop=$row['capacidad'];
 
 
-            $sqlmain12= "select * from appointment inner join patient on patient.pid=appointment.pid inner join schedule on schedule.scheduleid=appointment.scheduleid where schedule.scheduleid=$id;";
+            $sqlmain12= "select * from inscripcion inner join users on users.id=inscripcion.udi inner join exam on exam.idexamen=inscripcion.examen_id where exam.idexamen=$id;";
             $result12= $database->query($sqlmain12);
             echo '
             <div id="popup1" class="overlay">
@@ -644,10 +644,10 @@
                                          else{
                                          for ( $x=0; $x<$result->num_rows;$x++){
                                              $row=$result->fetch_assoc();
-                                             $apponum=$row["apponum"];
-                                             $pid=$row["pid"];
-                                             $pname=$row["pname"];
-                                             $ptel=$row["ptel"];
+                                             $apponum=$row["numerodecita"];
+                                             $pid=$row["id"];
+                                             $pname=$row["name"];
+                                             $ptel=$row["matricula"];
                                              
                                              echo '<tr style="text-align:center;">
                                                 <td>

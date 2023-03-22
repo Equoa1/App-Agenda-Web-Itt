@@ -207,13 +207,13 @@
 
 
                         $sqlpt2="";
-                        if(!empty($_POST["docid"])){
-                            $docid=$_POST["docid"];
+                        if(!empty($_POST["proid"])){
+                            $docid=$_POST["proid"];
                             $sqlpt2=" profesores.proid=$docid ";
                         }
                         //echo $sqlpt2;
                         //echo $sqlpt1;
-                        $sqlmain= "select inscripcion.examen_id,exam.idexamen,exam.examendes,profesores.nombre,users.name,exam.fechaexamen,exam.hora,inscripcion.numerodecita,inscripcion.fecha_examen from exam inner join inscripcion on exam.idexamen=inscripcion.examen_id inner join users on users.id=inscripcion.udi inner join profesores on exam.profesor=profesores.proid";
+                        $sqlmain= "select inscripcion.appoid,exam.idexamen,exam.examendes,profesores.nombre,users.name,exam.fechaexamen,exam.hora,inscripcion.numerodecita,inscripcion.fecha_examen from exam inner join inscripcion on exam.idexamen=inscripcion.examen_id inner join users on users.id=inscripcion.udi inner join profesores on exam.profesor=profesores.proid";
                         $sqllist=array($sqlpt1,$sqlpt2);
                         $sqlkeywords=array(" where "," and ");
                         $key2=0;
@@ -230,7 +230,7 @@
                         
                         //
                     }else{
-                        $sqlmain= "select inscripcion.examen_id,exam.idexamen,exam.examendes,profesores.nombre,users.name,exam.fechaexamen,exam.hora,inscripcion.numerodecita,inscripcion.fecha_examen from exam inner join inscripcion on exam.idexamen=inscripcion.examen_id inner join users on users.id=inscripcion.udi inner join profesores on exam.profesor=profesores.proid  order by exam.fechaexamen desc";
+                        $sqlmain= "select inscripcion.appoid,exam.idexamen,exam.examendes,profesores.nombre,users.name,exam.fechaexamen,exam.hora,inscripcion.numerodecita,inscripcion.fecha_examen from exam inner join inscripcion on exam.idexamen=inscripcion.examen_id inner join users on users.id=inscripcion.udi inner join profesores on exam.profesor=profesores.proid  order by exam.fechaexamen desc";
 
                     }
 
@@ -310,7 +310,7 @@
                                 else{
                                 for ( $x=0; $x<$result->num_rows;$x++){
                                     $row=$result->fetch_assoc();
-                                    $appoid=$row["examen_id"];
+                                    $appoid=$row["appoid"];
                                     $scheduleid=$row["idexamen"];
                                     $title=$row["examendes"];
                                     $docname=$row["nombre"];

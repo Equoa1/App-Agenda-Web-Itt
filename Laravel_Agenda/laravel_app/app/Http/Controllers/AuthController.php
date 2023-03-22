@@ -111,6 +111,7 @@ class AuthController extends Controller
         'examen_id' => 'required',  
     ];
     $req->validate($rules);
+   
 
     $existingInscripcion = DB::table('inscripcion')
         ->where('usuario_id', $req->usuario_id)
@@ -119,9 +120,22 @@ class AuthController extends Controller
 
     if ($existingInscripcion) {
         return response()->json(['message' => 'El usuario ya está inscrito en este examen.'], 400);
+       
     }
+    else{
+        $user = DB::table('users')
+        ->where('matricula', $req->input('usuario_id'))
+        ->first();
+        $cantidad = DB::table('inscripcion')
+        ->where('examen_id', '=', $req->examen_id)
+        ->count();
 
-    DB::table('inscripcion')->insert([
+
+      
+
+        DB::table('inscripcion')->insert([
+        'udi' => $user->id,
+        'numerodecita' => $cantidad + 1,
         'usuario_id' => $req->usuario_id,
         'examen_id' => $req->examen_id,
         'fecha_examen' =>$req->fecha_examen,
@@ -130,6 +144,12 @@ class AuthController extends Controller
     ]);
 
     return response()->json(['message' => 'El usuario ha sido inscrito en el examen.'], 200);
+
+    }
+   
+   
+
+    
 }
 
 }
