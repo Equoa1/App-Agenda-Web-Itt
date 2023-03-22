@@ -538,14 +538,14 @@
                         
                             <tr>
                                 <td>
-                                    <p style="padding: 0;margin: 0;text-align: left;font-size: 25px;font-weight: 500;">View Details.</p><br><br>
+                                    <p style="padding: 0;margin: 0;text-align: left;font-size: 25px;font-weight: 500;">Ver Detalles</p><br><br>
                                 </td>
                             </tr>
                             
                             <tr>
                                 
                                 <td class="label-td" colspan="2">
-                                    <label for="name" class="form-label">Session Title: </label>
+                                    <label for="name" class="form-label">Examen Descripcion: </label>
                                 </td>
                             </tr>
                             <tr>
@@ -556,7 +556,7 @@
                             </tr>
                             <tr>
                                 <td class="label-td" colspan="2">
-                                    <label for="Email" class="form-label">Doctor of this session: </label>
+                                    <label for="Email" class="form-label">Profesor Asignado: </label>
                                 </td>
                             </tr>
                             <tr>
@@ -566,7 +566,7 @@
                             </tr>
                             <tr>
                                 <td class="label-td" colspan="2">
-                                    <label for="nic" class="form-label">Scheduled Date: </label>
+                                    <label for="nic" class="form-label">Fecha Agendada: </label>
                                 </td>
                             </tr>
                             <tr>
@@ -576,7 +576,7 @@
                             </tr>
                             <tr>
                                 <td class="label-td" colspan="2">
-                                    <label for="Tele" class="form-label">Scheduled Time: </label>
+                                    <label for="Tele" class="form-label">Hora Agendada: </label>
                                 </td>
                             </tr>
                             <tr>
@@ -586,7 +586,7 @@
                             </tr>
                             <tr>
                                 <td class="label-td" colspan="2">
-                                    <label for="spec" class="form-label"><b>Patients that Already registerd for this session:</b> ('.$result12->num_rows."/".$nop.')</label>
+                                    <label for="spec" class="form-label"><b>Alumnos Registrados:</b> ('.$result12->num_rows."/".$nop.')</label>
                                     <br><br>
                                 </td>
                             </tr>
@@ -600,20 +600,20 @@
                                  <thead>
                                  <tr>   
                                         <th class="table-headin">
-                                             Patient ID
+                                            Matricula
                                          </th>
                                          <th class="table-headin">
-                                             Patient name
+                                             Nombre Del Profesor
                                          </th>
                                          <th class="table-headin">
                                              
-                                             Appointment number
+                                             Numero De Agendado
                                              
                                          </th>
                                         
                                          
                                          <th class="table-headin">
-                                             Patient Telephone
+                                             Folio
                                          </th>
                                          
                                  </thead>
@@ -645,13 +645,13 @@
                                          for ( $x=0; $x<$result->num_rows;$x++){
                                              $row=$result->fetch_assoc();
                                              $apponum=$row["numerodecita"];
-                                             $pid=$row["id"];
+                                             $folio=$row["folio"];
                                              $pname=$row["name"];
-                                             $ptel=$row["matricula"];
+                                             $pmatricula=$row["matricula"];
                                              
                                              echo '<tr style="text-align:center;">
                                                 <td>
-                                                '.substr($pid,0,15).'
+                                                '.substr($pmatricula,0,15).'
                                                 </td>
                                                  <td style="font-weight:600;padding:25px">'.
                                                  
@@ -662,7 +662,7 @@
                                                  
                                                  </td>
                                                  <td>
-                                                 '.substr($ptel,0,25).'
+                                                 '.substr($folio,0,25).'
                                                  </td>
                                                  
                                                  
