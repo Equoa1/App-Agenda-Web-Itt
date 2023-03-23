@@ -175,7 +175,7 @@
                 ?>
                   
                 <tr>
-                   <td colspan="4">
+                   <td colspan="3">
                        <center>
                         <div class="abc scroll">
                         <table width="93%" class="sub-table scrolldown" border="0">
@@ -191,10 +191,9 @@
                                   Correo Electronico
                                 </th>
                                 <th class="table-headin">
-                                    
-                                
-                                    
+                                  
                                 </th>
+                                
                                 <th class="table-headin">
                                     
                                     Events
@@ -210,7 +209,7 @@
 
                                 if($result->num_rows==0){
                                     echo '<tr>
-                                    <td colspan="4">
+                                    <td colspan="3">
                                     <br><br><br><br>
                                     <center>
                                     <img src="../img/notfound.svg" width="25%">
@@ -236,7 +235,7 @@
                                         substr($name,0,30)
                                         .'</td>
                                         <td>
-                                        '.substr($email,0,20).'
+                                        '.substr($email,0,35).'
                                         </td>
                                         <td>
                                            
@@ -399,7 +398,7 @@
                             <tr>
                                 <form action="add-new.php" method="POST" class="add-new-form">
                                 <td class="label-td" colspan="2">
-                                    <label for="name" class="form-label">Name: </label>
+                                    <label for="name" class="form-label">Nombre: </label>
                                 </td>
                             </tr>
                             <tr>
@@ -410,12 +409,12 @@
                             </tr>
                             <tr>
                                 <td class="label-td" colspan="2">
-                                    <label for="Email" class="form-label">Email: </label>
+                                    <label for="Email" class="form-label">Correo Electronico: </label>
                                 </td>
                             </tr>
                              <tr>
                                 <td class="label-td" colspan="2">
-                                    <input type="email" name="email" class="input-text" placeholder="Email Address" required><br>
+                                    <input type="email" name="email" class="input-text" placeholder="Correo Electronico" required><br>
                                 </td>
                             </tr>
                            
@@ -437,7 +436,7 @@
                             </tr>
                             <tr>
                                 <td class="label-td" colspan="2">
-                                    <label for="password" class="form-label">Password: </label>
+                                    <label for="password" class="form-label">Contraseña: </label>
                                 </td>
                             </tr>
                             <tr>

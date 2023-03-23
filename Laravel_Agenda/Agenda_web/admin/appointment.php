@@ -246,40 +246,40 @@
                         <thead>
                         <tr>
                                 <th class="table-headin">
-                                    Patient name
+                                    Nombre del Alumno
                                 </th>
                                 <th class="table-headin">
                                     
-                                    Appointment number
+                                    Numero De Cita
                                     
                                 </th>
                                
                                 
                                 <th class="table-headin">
-                                    Doctor
+                                    Profesor
                                 </th>
                                 <th class="table-headin">
                                     
                                 
-                                    Session Title
+                                    Titulo Del Examen
                                     
                                     </th>
                                 
                                 <th class="table-headin" style="font-size:10px">
                                     
-                                    Session Date & Time
+                                    Fecha Y Hora
                                     
                                 </th>
                                 
                                 <th class="table-headin">
                                     
-                                    Appointment Date
+                                    Fecha Del Examen
                                     
                                 </th>
                                 
                                 <th class="table-headin">
                                     
-                                    Events
+                                    Evento
                                     
                                 </tr>
                         </thead>

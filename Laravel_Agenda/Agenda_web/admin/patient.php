@@ -168,7 +168,7 @@
                 ?>
                   
                 <tr>
-                   <td colspan="4">
+                   <td colspan="3">
                        <center>
                         <div class="abc scroll">
                         <table width="93%" class="sub-table scrolldown"  style="border-spacing:0;">
@@ -177,33 +177,32 @@
                                 <th class="table-headin">
                                     
                                 
-                                Name
+                               Nombre Completo
                                 
                                 </th>
+                                <th class="table-headin">
+                                    
                                 
+                                    Folio
+                                    
+                                </th>
                                 <th class="table-headin">
                                 
                             
-                                Matricula
+                               Matricula
                                 
                                 </th>
                                 <th class="table-headin">
-                                   Correo
+                                   Correo Electronico
                                 </th>
-                                
-                                <th class="table-headin">
-                                    
-                                    Folio
-                                    
-                                </tr>
                                 <th class="table-headin">
                                     
                                     Evento
                                     
-                                </tr>
+                                </th>
+                               
                         </thead>
                         <tbody>
-                            
                         
                             <?php
 
@@ -212,7 +211,7 @@
 
                                 if($result->num_rows==0){
                                     echo '<tr>
-                                    <td colspan="4">
+                                    <td colspan="3">
                                     <br><br><br><br>
                                     <center>
                                     <img src="../img/notfound.svg" width="25%">
@@ -233,25 +232,23 @@
                                     $pid=$row["id"];
                                     $name=$row["name"];
                                     $email=$row["email"];
-                                    $dob=$row["folio"];
+                                    $folio=$row["folio"];
                                     $matricula=$row["matricula"];
                                     
                                     echo '<tr>
-                                  
                                         <td> &nbsp;'.
                                         substr($name,0,35)
                                         .'</td>
-                                      
-                                       
+                                        <td>
+                                        '.substr($folio,0,15).'
+                                        </td>
                                         <td>
                                             '.substr($matricula,0,10).'
                                         </td>
                                         <td>
-                                        '.substr($email,0,20).'
+                                        '.substr($email,0,35).'
                                          </td>
-                                        <td>
-                                        '.substr($dob,0,10).'
-                                        </td>
+                                        
                                         <td >
                                         <div style="display:flex;justify-content: center;">
                                         
@@ -284,14 +281,13 @@
         
         $id=$_GET["id"];
         $action=$_GET["action"];
-            $sqlmain= "select * from patient where pid='$id'";
+            $sqlmain= "select * from users where id='$id'";
             $result= $database->query($sqlmain);
             $row=$result->fetch_assoc();
-            $name=$row["pname"];
-            $email=$row["pemail"];
-            $nic=$row["pnic"];
-            $dob=$row["pdob"];
-            $tele=$row["ptel"];
+            $name=$row["name"];
+            $email=$row["email"];
+            $nic=$row["folio"];
+            $tele=$row["matricula"];
             $address=$row["paddress"];
             echo '
             <div id="popup1" class="overlay">
@@ -306,13 +302,13 @@
                         
                             <tr>
                                 <td>
-                                    <p style="padding: 0;margin: 0;text-align: left;font-size: 25px;font-weight: 500;">View Details.</p><br><br>
+                                    <p style="padding: 0;margin: 0;text-align: left;font-size: 25px;font-weight: 500;">Ver Detalles.</p><br><br>
                                 </td>
                             </tr>
                             <tr>
                                 
                                 <td class="label-td" colspan="2">
-                                    <label for="name" class="form-label">Patient ID: </label>
+                                    <label for="name" class="form-label">Paciente ID: </label>
                                 </td>
                             </tr>
                             <tr>
@@ -325,7 +321,7 @@
                             <tr>
                                 
                                 <td class="label-td" colspan="2">
-                                    <label for="name" class="form-label">Name: </label>
+                                    <label for="name" class="form-label">Nombre Completo: </label>
                                 </td>
                             </tr>
                             <tr>
@@ -336,7 +332,7 @@
                             </tr>
                             <tr>
                                 <td class="label-td" colspan="2">
-                                    <label for="Email" class="form-label">Email: </label>
+                                    <label for="Email" class="form-label">Correo Electronico: </label>
                                 </td>
                             </tr>
                             <tr>
@@ -344,19 +340,10 @@
                                 '.$email.'<br><br>
                                 </td>
                             </tr>
+                            
                             <tr>
                                 <td class="label-td" colspan="2">
-                                    <label for="nic" class="form-label">NIC: </label>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="label-td" colspan="2">
-                                '.$nic.'<br><br>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="label-td" colspan="2">
-                                    <label for="Tele" class="form-label">Telephone: </label>
+                                    <label for="Tele" class="form-label">Matricula: </label>
                                 </td>
                             </tr>
                             <tr>
@@ -364,29 +351,9 @@
                                 '.$tele.'<br><br>
                                 </td>
                             </tr>
-                            <tr>
-                                <td class="label-td" colspan="2">
-                                    <label for="spec" class="form-label">Address: </label>
-                                    
-                                </td>
-                            </tr>
-                            <tr>
-                            <td class="label-td" colspan="2">
-                            '.$address.'<br><br>
-                            </td>
-                            </tr>
-                            <tr>
-                                
-                                <td class="label-td" colspan="2">
-                                    <label for="name" class="form-label">Date of Birth: </label>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="label-td" colspan="2">
-                                    '.$dob.'<br><br>
-                                </td>
-                                
-                            </tr>
+                           
+                            
+                           
                             <tr>
                                 <td colspan="2">
                                     <a href="patient.php"><input type="button" value="OK" class="login-btn btn-primary-soft btn" ></a>

@@ -107,12 +107,12 @@
                                     
                                     <?php
                                         echo '<datalist id="doctors">';
-                                        $list11 = $database->query("select  docname,docemail from  doctor;");
+                                        $list11 = $database->query("select  nombre,correo from  profesores;");
         
                                         for ($y=0;$y<$list11->num_rows;$y++){
                                             $row00=$list11->fetch_assoc();
-                                            $d=$row00["docname"];
-                                            $c=$row00["docemail"];
+                                            $d=$row00["nombre"];
+                                            $c=$row00["correo"];
                                             echo "<option value='$d'><br/>";
                                             echo "<option value='$c'><br/>";
                                         };
@@ -128,20 +128,20 @@
                             </td>
                             <td width="15%">
                                 <p style="font-size: 14px;color: rgb(119, 119, 119);padding: 0;margin: 0;text-align: right;">
-                                    Today's Date
+                                    Hoy Es
                                 </p>
                                 <p class="heading-sub12" style="padding: 0;margin: 0;">
                                     <?php 
-                                date_default_timezone_set('Asia/Kolkata');
+                                date_default_timezone_set('America/Tijuana');
         
                                 $today = date('Y-m-d');
                                 echo $today;
 
 
-                                $patientrow = $database->query("select  * from  patient;");
-                                $doctorrow = $database->query("select  * from  doctor;");
-                                $appointmentrow = $database->query("select  * from  appointment where appodate>='$today';");
-                                $schedulerow = $database->query("select  * from  schedule where scheduledate='$today';");
+                                $patientrow = $database->query("select  * from  users;");
+                                $doctorrow = $database->query("select  * from  profesores;");
+                                $appointmentrow = $database->query("select  * from  inscripcion where fecha_examen>='$today';");
+                                $schedulerow = $database->query("select  * from  exam where fechaexamen='$today';");
 
 
                                 ?>
@@ -160,7 +160,7 @@
                         <table class="filter-container" style="border: none;" border="0">
                             <tr>
                                 <td colspan="4">
-                                    <p style="font-size: 20px;font-weight:600;padding-left: 12px;">Status</p>
+                                    <p style="font-size: 20px;font-weight:600;padding-left: 12px;">Estado</p>
                                 </td>
                             </tr>
                             <tr>
@@ -171,7 +171,7 @@
                                                     <?php    echo $doctorrow->num_rows  ?>
                                                 </div><br>
                                                 <div class="h3-dashboard">
-                                                    Doctors &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    Profesores &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                 </div>
                                         </div>
                                                 <div class="btn-icon-back dashboard-icons" style="background-image: url('../img/icons/doctors-hover.svg');"></div>
@@ -184,7 +184,7 @@
                                                     <?php    echo $patientrow->num_rows  ?>
                                                 </div><br>
                                                 <div class="h3-dashboard">
-                                                    Patients &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    Usuarios &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                 </div>
                                         </div>
                                                 <div class="btn-icon-back dashboard-icons" style="background-image: url('../img/icons/patients-hover.svg');"></div>
