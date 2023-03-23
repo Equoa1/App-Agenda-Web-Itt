@@ -52,8 +52,7 @@
                                     <img src="../img/user.png" alt="" width="100%" style="border-radius:50%">
                                 </td>
                                 <td style="padding:0px;margin:0px;">
-                                    <p class="profile-title">Administrator</p>
-                                    <p class="profile-subtitle">admin@edoc.com</p>
+                                    
                                 </td>
                             </tr>
                             <tr>
@@ -104,16 +103,16 @@
                         
                         <form action="" method="post" class="header-search">
 
-                            <input type="search" name="search" class="input-text header-searchbar" placeholder="Search Patient name or Email" list="patient">&nbsp;&nbsp;
+                            <input type="search" name="search" class="input-text header-searchbar" placeholder="Buscar Alumno registrado" list="patient">&nbsp;&nbsp;
                             
                             <?php
                                 echo '<datalist id="patient">';
-                                $list11 = $database->query("select  pname,pemail from patient;");
+                                $list11 = $database->query("select name,email from users;");
 
                                 for ($y=0;$y<$list11->num_rows;$y++){
                                     $row00=$list11->fetch_assoc();
-                                    $d=$row00["pname"];
-                                    $c=$row00["pemail"];
+                                    $d=$row00["name"];
+                                    $c=$row00["email"];
                                     echo "<option value='$d'><br/>";
                                     echo "<option value='$c'><br/>";
                                 };
@@ -150,7 +149,7 @@
                 
                 <tr>
                     <td colspan="4" style="padding-top:10px;">
-                        <p class="heading-main12" style="margin-left: 45px;font-size:18px;color:rgb(49, 49, 49)">All Patients (<?php echo $list11->num_rows; ?>)</p>
+                        <p class="heading-main12" style="margin-left: 45px;font-size:18px;color:rgb(49, 49, 49)">Todos los alumnos (<?php echo $list11->num_rows; ?>)</p>
                     </td>
                     
                 </tr>
@@ -158,9 +157,9 @@
                     if($_POST){
                         $keyword=$_POST["search"];
                         
-                        $sqlmain= "select * from patient where pemail='$keyword' or pname='$keyword' or pname like '$keyword%' or pname like '%$keyword' or pname like '%$keyword%' ";
+                        $sqlmain= "select * from users where email='$keyword' or name='$keyword' or name like '$keyword%' or name like '%$keyword' or name like '%$keyword%' ";
                     }else{
-                        $sqlmain= "select * from patient order by pid desc";
+                        $sqlmain= "select * from users order by id desc";
 
                     }
 
@@ -181,33 +180,30 @@
                                 Name
                                 
                                 </th>
-                                <th class="table-headin">
-                                    
                                 
-                                    NIC
-                                    
-                                </th>
                                 <th class="table-headin">
                                 
                             
-                                Telephone
+                                Matricula
                                 
                                 </th>
                                 <th class="table-headin">
-                                    Email
+                                   Correo
                                 </th>
+                                
                                 <th class="table-headin">
                                     
-                                    Date of Birth
+                                    Folio
                                     
-                                </th>
+                                </tr>
                                 <th class="table-headin">
                                     
-                                    Events
+                                    Evento
                                     
                                 </tr>
                         </thead>
                         <tbody>
+                            
                         
                             <?php
 
@@ -234,22 +230,21 @@
                                 else{
                                 for ( $x=0; $x<$result->num_rows;$x++){
                                     $row=$result->fetch_assoc();
-                                    $pid=$row["pid"];
-                                    $name=$row["pname"];
-                                    $email=$row["pemail"];
-                                    $nic=$row["pnic"];
-                                    $dob=$row["pdob"];
-                                    $tel=$row["ptel"];
+                                    $pid=$row["id"];
+                                    $name=$row["name"];
+                                    $email=$row["email"];
+                                    $dob=$row["folio"];
+                                    $matricula=$row["matricula"];
                                     
                                     echo '<tr>
+                                  
                                         <td> &nbsp;'.
                                         substr($name,0,35)
                                         .'</td>
+                                      
+                                       
                                         <td>
-                                        '.substr($nic,0,12).'
-                                        </td>
-                                        <td>
-                                            '.substr($tel,0,10).'
+                                            '.substr($matricula,0,10).'
                                         </td>
                                         <td>
                                         '.substr($email,0,20).'
