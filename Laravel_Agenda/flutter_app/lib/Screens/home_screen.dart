@@ -14,6 +14,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   String _username = '';
   int _selectedIndex = 0;
+  int index = 0;
 
   List<dynamic> examenes = [];
 
@@ -60,6 +61,27 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       _username = username;
     });
+  }
+
+  Future<void> cancelarCita(String username) async {
+    final url = Uri.parse(
+        'http://192.168.1.78:8000/api/auth/cancelarexamen/$_username');
+    final response = await http.delete(url, body: {'username': username});
+
+    if (response.statusCode == 200) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Cita Eliminada'),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Se ha producido un Error Inténtelo más Tarde'),
+        ),
+      );
+      // Si ha ocurrido un error, aquí puedes hacer algo como mostrar un mensaje de error
+    }
   }
 
   Future<List<dynamic>> exameninscrito() async {
@@ -141,6 +163,7 @@ class _HomeScreenState extends State<HomeScreen> {
               onTap: () async {
                 final examenInscrito = await exameninscrito();
                 final firstExamenInscrito = examenInscrito.first;
+
                 showDialog(
                   context: context,
                   builder: (BuildContext context) {
@@ -156,10 +179,19 @@ class _HomeScreenState extends State<HomeScreen> {
                                 'Usuario: ${firstExamenInscrito['usuario_id']}'),
                             Text(
                                 'Fecha del examen: ${firstExamenInscrito['fecha_examen']}'),
+                            Text(
+                                'Hora Del Examen: ${firstExamenInscrito['hora']}'),
                           ],
                         ),
                       ),
                       actions: [
+                        TextButton(
+                          onPressed: () {
+                            cancelarCita(_username);
+                            Navigator.pop(context);
+                          },
+                          child: Text('Eliminar Cita'),
+                        ),
                         TextButton(
                           onPressed: () {
                             Navigator.pop(context);

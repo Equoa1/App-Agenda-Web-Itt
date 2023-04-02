@@ -21,6 +21,7 @@ Route::post('/auth/login', [AuthController::class, 'login']);
 Route::get('/auth/exam', [AuthController::class, 'exam']);
 Route::post('/auth/inscribirse/', [AuthController::class, 'inscribirse']);
 Route::get('/auth/inscritos/{username}', [AuthController::class, 'inscritos']);
+Route::delete('/auth/cancelarexamen/{username}', [AuthController::class, 'cancelarexamen']);
 Route::get('/auth/exameninscrito/{username}', [AuthController::class, 'exameninscrito']);
 
 

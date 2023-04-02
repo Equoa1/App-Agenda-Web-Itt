@@ -33,7 +33,7 @@ class AuthServices {
 
     if (response.statusCode == 200) {
       final jsonData = json.decode(response.body);
-      // save the token and username to local storage
+
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setString('token', jsonData['token']);
       await prefs.setString('username', jsonData['user']['matricula']);

@@ -17,18 +17,39 @@ class AuthController extends Controller
         ->first();
         if($existingInscripcion)
         {
+         
             $examenesid = DB::select("SELECT * FROM inscripcion WHERE usuario_id = '$username'");
+          
             return response()->json($examenesid,200);
+            
+
+        }
+       
+
+
+    }
+    public function cancelarexamen($username)
+    {
+        $existingInscripcion = DB::table('inscripcion')
+        ->where('usuario_id', $username)
+        ->first();
+        if($existingInscripcion)
+        {
+            DB::table('inscripcion')
+            ->where('usuario_id',$username)
+            ->delete();
+          
+            
 
         }
         else
         {
-            $response = ['message' => 'No se ha registrado ningun examen'];
-            return response()->json($response, 200);
+            
         }
 
 
     }
+
     public function register(Request $req)
     {
        
