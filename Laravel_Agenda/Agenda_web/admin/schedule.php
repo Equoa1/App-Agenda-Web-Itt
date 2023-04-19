@@ -178,7 +178,7 @@
                                     echo "<option value=".$id00.">$sn</option><br/>";
                                 };
 
-
+                               
                                 ?>
 
                         </select>
@@ -310,7 +310,7 @@
                                         substr($title,0,30)
                                         .'</td>
                                         <td>
-                                        '.substr($docname,0,20).'
+                                        '.substr($docname,0,40).'
                                         </td>
                                         <td style="text-align:center;">
                                             '.substr($scheduledate,0,10).' '.substr($scheduletime,0,5).'
@@ -318,10 +318,17 @@
                                         <td style="text-align:center;">
                                             '.$nop.'
                                         </td>
+                                        
 
                                         <td>
                                         <div style="display:flex;justify-content: center;">
-                                        
+                                        <a href="?action=download&id='.$scheduleid.'" class="non-style-link">
+                                        <button class="btn-primary-soft btn button-icon btn-print" style="padding-left: 40px; padding-top: 12px; padding-bottom: 12px; margin-top: 10px;">
+                                        <font class="tn-in-text">Descargar</font>
+                                        </button>
+                                        </a>
+
+                                        &nbsp;&nbsp;&nbsp;
                                         <a href="?action=view&id='.$scheduleid.'" class="non-style-link"><button  class="btn-primary-soft btn button-icon btn-view"  style="padding-left: 40px;padding-top: 12px;padding-bottom: 12px;margin-top: 10px;"><font class="tn-in-text">Ver</font></button></a>
                                        &nbsp;&nbsp;&nbsp;
                                        <a href="?action=drop&id='.$scheduleid.'&name='.$title.'" class="non-style-link"><button  class="btn-primary-soft btn button-icon btn-delete"  style="padding-left: 40px;padding-top: 12px;padding-bottom: 12px;margin-top: 10px;"><font class="tn-in-text">Quitar</font></button></a>
@@ -384,13 +391,13 @@
                             </tr>
                             <tr>
                                 <td class="label-td" colspan="2">
-                                    <input type="text" name="title" class="input-text" placeholder="Name of this Session" required><br>
+                                    <input type="text" name="title" class="input-text" placeholder="Nombre de examen" required><br>
                                 </td>
                             </tr>
                             <tr>
                                 
                                 <td class="label-td" colspan="2">
-                                    <label for="docid" class="form-label">Select Doctor: </label>
+                                    <label for="docid" class="form-label">Seleccionar Profesor: </label>
                                 </td>
                             </tr>
                             <tr>
@@ -416,17 +423,17 @@
                             </tr>
                             <tr>
                                 <td class="label-td" colspan="2">
-                                    <label for="nop" class="form-label">Number of Patients/Appointment Numbers : </label>
+                                    <label for="nop" class="form-label">Cantidad Para Inscribirse : </label>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="label-td" colspan="2">
-                                    <input type="number" name="nop" class="input-text" min="0"  placeholder="The final appointment number for this session depends on this number" required><br>
+                                    <input type="number" name="nop" class="input-text" min="0"  placeholder="" required><br>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="label-td" colspan="2">
-                                    <label for="date" class="form-label">Session Date: </label>
+                                    <label for="date" class="form-label">Fecha Del Examen: </label>
                                 </td>
                             </tr>
                             <tr>
@@ -436,7 +443,7 @@
                             </tr>
                             <tr>
                                 <td class="label-td" colspan="2">
-                                    <label for="time" class="form-label">Schedule Time: </label>
+                                    <label for="time" class="form-label">Hora Del Examen: </label>
                                 </td>
                             </tr>
                             <tr>
@@ -447,9 +454,9 @@
                            
                             <tr>
                                 <td colspan="2">
-                                    <input type="reset" value="Reset" class="login-btn btn-primary-soft btn" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="reset" value="Resetear" class="login-btn btn-primary-soft btn" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 
-                                    <input type="submit" value="Place this Session" class="login-btn btn-primary btn" name="shedulesubmit">
+                                    <input type="submit" value="Guardar Examen" class="login-btn btn-primary btn" name="shedulesubmit">
                                 </td>
                 
                             </tr>
@@ -603,7 +610,7 @@
                                             Matricula
                                          </th>
                                          <th class="table-headin">
-                                             Nombre Del Profesor
+                                             Nombre Del Alumno
                                          </th>
                                          <th class="table-headin">
                                              
@@ -615,6 +622,9 @@
                                          <th class="table-headin">
                                              Folio
                                          </th>
+                                         <th class="table-headin">
+                                         Carrera
+                                     </th>
                                          
                                  </thead>
                                  <tbody>';
@@ -648,6 +658,7 @@
                                              $folio=$row["folio"];
                                              $pname=$row["name"];
                                              $pmatricula=$row["matricula"];
+                                             $carrera=$row["carrera"];
                                              
                                              echo '<tr style="text-align:center;">
                                                 <td>
@@ -663,6 +674,9 @@
                                                  </td>
                                                  <td>
                                                  '.substr($folio,0,25).'
+                                                 </td>
+                                                 <td>
+                                                 '.substr($carrera,0,25).'
                                                  </td>
                                                  
                                                  
@@ -690,11 +704,19 @@
             </div>
             </div>
             ';  
+                                    
+    }elseif ($action=='download') {
+       
+
+        
+       
     }
 }
         
     ?>
+    
     </div>
+    
 
 </body>
 </html>

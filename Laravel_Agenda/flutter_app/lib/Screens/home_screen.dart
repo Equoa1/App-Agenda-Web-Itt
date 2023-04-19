@@ -20,7 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<List<dynamic>> getExamenesDisponibles() async {
     final response =
-        await http.get(Uri.parse('http://192.168.1.78:8000/api/auth/exam'));
+        await http.get(Uri.parse('http://192.168.1.77:8000/api/auth/exam'));
 
     if (response.statusCode == 200) {
       return json.decode(response.body);
@@ -39,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
       String username = prefs.getString('username') ?? '';
 
       final inscritosResponse = await http.get(
-          Uri.parse('http://192.168.1.78:8000/api/auth/inscritos/$username'));
+          Uri.parse('http://192.168.1.77:8000/api/auth/inscritos/$username'));
       if (inscritosResponse.statusCode == 200) {
         final inscritos = List<int>.from(json.decode(inscritosResponse.body));
         final examenesDisponibles = examenes
@@ -65,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> cancelarCita(String username) async {
     final url = Uri.parse(
-        'http://192.168.1.78:8000/api/auth/cancelarexamen/$_username');
+        'http://192.168.1.77:8000/api/auth/cancelarexamen/$_username');
     final response = await http.delete(url, body: {'username': username});
 
     if (response.statusCode == 200) {
@@ -80,19 +80,17 @@ class _HomeScreenState extends State<HomeScreen> {
           content: Text('Se ha producido un Error Inténtelo más Tarde'),
         ),
       );
-      // Si ha ocurrido un error, aquí puedes hacer algo como mostrar un mensaje de error
     }
   }
 
   Future<List<dynamic>> exameninscrito() async {
     final response = await http.get(Uri.parse(
-        'http://192.168.1.78:8000/api/auth/exameninscrito/$_username'));
+        'http://192.168.1.77:8000/api/auth/exameninscrito/$_username'));
 
     if (response.statusCode == 200) {
       return json.decode(response.body);
     } else if (response.statusCode == 404) {
-      // Usuario no tiene examen agendado
-      return []; // Devolver lista vacía
+      return [];
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -116,7 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
     print("El username es: $username");
 
     final response = await http.post(
-      Uri.parse('http://192.168.1.78:8000/api/auth/inscribirse'),
+      Uri.parse('http://192.168.1.77:8000/api/auth/inscribirse'),
       body: {
         'usuario_id': username,
         'examen_id': examId.toString(),
@@ -133,8 +131,7 @@ class _HomeScreenState extends State<HomeScreen> {
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content:
-              Text('La cuenta $username se encuentra inscrito a un examen'),
+          content: Text(' El examen excedio el limite de capacidad de alumnos'),
         ),
       );
     }
@@ -204,7 +201,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 );
               },
             ),
-
             ListTile(
               leading: Icon(Icons.logout),
               title: Text('Cerrar Sesion'),
@@ -214,10 +210,71 @@ class _HomeScreenState extends State<HomeScreen> {
                     MaterialPageRoute(
                       builder: (BuildContext context) => const RegisterScreen(),
                     ));
-                // Agrega el código para la opción 2
               },
             ),
-            // Agrega más opciones de menú aquí
+            ListTile(
+              leading: Icon(Icons.edit),
+              title: Text('Editar Perfil'),
+              onTap: () {
+                showModalBottomSheet(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return Container(
+                      padding: EdgeInsets.all(20.0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          TextField(
+                            decoration: InputDecoration(
+                              hintText: 'Folio',
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                            ),
+                            onChanged: (value) {
+                              // Actualizar el valor del folio
+                            },
+                          ),
+                          SizedBox(height: 20.0),
+                          TextField(
+                            decoration: InputDecoration(
+                              hintText: 'Correo Electronico',
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                            ),
+                            onChanged: (value) {
+                              // Actualizar el valor del correo electrónico
+                            },
+                          ),
+                          SizedBox(height: 20.0),
+                          TextField(
+                            obscureText: true,
+                            decoration: InputDecoration(
+                              hintText: 'Contraseña',
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                            ),
+                            onChanged: (value) {
+                              // Actualizar el valor de la contraseña
+                            },
+                          ),
+                          SizedBox(height: 20.0),
+                          ElevatedButton(
+                            child: Text('Guardar Cambios'),
+                            onPressed: () {
+                              // Guardar los cambios en el perfil
+                              Navigator.pop(context);
+                            },
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
           ],
         ),
       ),
@@ -254,10 +311,23 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: ListTile(
                         leading: Icon(Icons.event),
                         title: Text(examen['examendes'],
-                            style: TextStyle(fontSize: 20)),
-                        subtitle: Text(
-                          'Fecha De Examen: ${examen['fechaexamen']}',
-                          style: TextStyle(color: Colors.red),
+                            style: TextStyle(fontSize: 20, color: Colors.blue)),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Fecha De Examen: ${examen['fechaexamen']}',
+                              style: TextStyle(color: Colors.black),
+                            ),
+                            Text(
+                              'Hora De Examen: ${examen['hora']}',
+                              style: TextStyle(color: Colors.black),
+                            ),
+                            Text(
+                              'Capacidad: ${examen['capacidad']}',
+                              style: TextStyle(color: Colors.black),
+                            ),
+                          ],
                         ),
                       ),
                     ),

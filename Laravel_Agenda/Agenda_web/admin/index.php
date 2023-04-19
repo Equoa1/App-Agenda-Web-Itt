@@ -103,7 +103,7 @@
                                 
                                 <form action="doctors.php" method="post" class="header-search">
         
-                                    <input type="search" name="search" class="input-text header-searchbar" placeholder="Search Doctor name or Email" list="doctors">&nbsp;&nbsp;
+                                    <input type="search" name="search" class="input-text header-searchbar" placeholder="Buscar Profesor " list="doctors">&nbsp;&nbsp;
                                     
                                     <?php
                                         echo '<datalist id="doctors">';
@@ -197,7 +197,7 @@
                                                     <?php    echo $appointmentrow ->num_rows  ?>
                                                 </div><br>
                                                 <div class="h3-dashboard" >
-                                                    NewBooking &nbsp;&nbsp;
+                                                   Nuevas Citas &nbsp;&nbsp;
                                                 </div>
                                         </div>
                                                 <div class="btn-icon-back dashboard-icons" style="margin-left: 0px;background-image: url('../img/icons/book-hover.svg');"></div>
@@ -210,7 +210,7 @@
                                                     <?php    echo $schedulerow ->num_rows  ?>
                                                 </div><br>
                                                 <div class="h3-dashboard" style="font-size: 15px">
-                                                    Today Sessions
+                                                   Examenes Hoy
                                                 </div>
                                         </div>
                                                 <div class="btn-icon-back dashboard-icons" style="background-image: url('../img/icons/session-iceblue.svg');"></div>
@@ -233,26 +233,17 @@
                         <table width="100%" border="0" class="dashbord-tables">
                             <tr>
                                 <td>
-                                    <p style="padding:10px;padding-left:48px;padding-bottom:0;font-size:23px;font-weight:700;color:var(--primarycolor);">
-                                        Upcoming Appointments until Next <?php  
-                                        echo date("l",strtotime("+1 week"));
-                                        ?>
-                                    </p>
+                                    
                                     <p style="padding-bottom:19px;padding-left:50px;font-size:15px;font-weight:500;color:#212529e3;line-height: 20px;">
-                                        Here's Quick access to Upcoming Appointments until 7 days<br>
-                                        More details available in @Appointment section.
+                                       Acceso Rapido para ver en tiempo real <br>
+                                        las inscripciones de los alumnos.
                                     </p>
 
                                 </td>
                                 <td>
-                                    <p style="text-align:right;padding:10px;padding-right:48px;padding-bottom:0;font-size:23px;font-weight:700;color:var(--primarycolor);">
-                                        Upcoming Sessions  until Next <?php  
-                                        echo date("l",strtotime("+1 week"));
-                                        ?>
-                                    </p>
+                                   
                                     <p style="padding-bottom:19px;text-align:right;padding-right:50px;font-size:15px;font-weight:500;color:#212529e3;line-height: 20px;">
-                                        Here's Quick access to Upcoming Sessions that Scheduled until 7 days<br>
-                                        Add,Remove and Many features available in @Schedule section.
+                                       Acceso rapido para ver los examenes agendados
                                     </p>
                                 </td>
                             </tr>
@@ -265,22 +256,22 @@
                                         <tr>    
                                                 <th class="table-headin" style="font-size: 12px;">
                                                         
-                                                    Appointment number
+                                                    Numero de Cita
                                                     
                                                 </th>
                                                 <th class="table-headin">
-                                                    Patient name
-                                                </th>
-                                                <th class="table-headin">
-                                                    
-                                                
-                                                    Doctor
-                                                    
+                                                   Nombre del paciente
                                                 </th>
                                                 <th class="table-headin">
                                                     
                                                 
-                                                    Session
+                                                    Profesor
+                                                    
+                                                </th>
+                                                <th class="table-headin">
+                                                    
+                                                
+                                                    Examen
                                                     
                                                 </th>
                                             </tr>
@@ -289,7 +280,7 @@
                                         
                                             <?php
                                             $nextweek=date("Y-m-d",strtotime("+1 week"));
-                                            $sqlmain= "select appointment.appoid,schedule.scheduleid,schedule.title,doctor.docname,patient.pname,schedule.scheduledate,schedule.scheduletime,appointment.apponum,appointment.appodate from schedule inner join appointment on schedule.scheduleid=appointment.scheduleid inner join patient on patient.pid=appointment.pid inner join doctor on schedule.docid=doctor.docid  where schedule.scheduledate>='$today'  and schedule.scheduledate<='$nextweek' order by schedule.scheduledate desc";
+                                            $sqlmain= "select inscripcion.appoid,exam.idexamen,exam.examendes,profesores.nombre,users.name,exam.fechaexamen,exam.hora,inscripcion.numerodecita,inscripcion.fecha_examen from exam inner join inscripcion on exam.idexamen=inscripcion.appoid inner join users on users.id=inscripcion.udi inner join profesores on exam.profesor=profesores.proid where exam.fechaexamen>='$today' and exam.fechaexamen<='$nextweek' order by exam.fechaexamen desc;";
 
                                                 $result= $database->query($sqlmain);
                 
@@ -301,8 +292,8 @@
                                                     <img src="../img/notfound.svg" width="25%">
                                                     
                                                     <br>
-                                                    <p class="heading-main12" style="margin-left: 45px;font-size:20px;color:rgb(49, 49, 49)">We  couldnt find anything related to your keywords !</p>
-                                                    <a class="non-style-link" href="appointment.php"><button  class="login-btn btn-primary-soft btn"  style="display: flex;justify-content: center;align-items: center;margin-left:20px;">&nbsp; Show all Appointments &nbsp;</font></button>
+                                                    <p class="heading-main12" style="margin-left: 45px;font-size:20px;color:rgb(49, 49, 49)">No se ha encontrado ningun resultado</p>
+                                                    <a class="non-style-link" href="appointment.php"><button  class="login-btn btn-primary-soft btn"  style="display: flex;justify-content: center;align-items: center;margin-left:20px;">&nbsp; Ver todas las incripciones &nbsp;</font></button>
                                                     </a>
                                                     </center>
                                                     <br><br><br><br>
@@ -314,14 +305,14 @@
                                                 for ( $x=0; $x<$result->num_rows;$x++){
                                                     $row=$result->fetch_assoc();
                                                     $appoid=$row["appoid"];
-                                                    $scheduleid=$row["scheduleid"];
-                                                    $title=$row["title"];
-                                                    $docname=$row["docname"];
-                                                    $scheduledate=$row["scheduledate"];
-                                                    $scheduletime=$row["scheduletime"];
-                                                    $pname=$row["pname"];
-                                                    $apponum=$row["apponum"];
-                                                    $appodate=$row["appodate"];
+                                                    $scheduleid=$row["fechaexamen"];
+                                                    $title=$row["examendes"];
+                                                    $docname=$row["nombre"];
+                                                    $scheduledate=$row["fechaexamen"];
+                                                    $scheduletime=$row["hora"];
+                                                    $pname=$row["name"];
+                                                    $apponum=$row["numerodecita"];
+                                                    $appodate=$row["fecha_examen"];
                                                     echo '<tr>
 
 
@@ -366,16 +357,16 @@
                                                 <th class="table-headin">
                                                     
                                                 
-                                                Session Title
+                                               Titulo del examen
                                                 
                                                 </th>
                                                 
                                                 <th class="table-headin">
-                                                    Doctor
+                                                    Profesor
                                                 </th>
                                                 <th class="table-headin">
                                                     
-                                                    Sheduled Date & Time
+                                                    Fecha y Hora
                                                     
                                                 </th>
                                                     
@@ -385,7 +376,7 @@
                                         
                                             <?php
                                             $nextweek=date("Y-m-d",strtotime("+1 week"));
-                                            $sqlmain= "select schedule.scheduleid,schedule.title,doctor.docname,schedule.scheduledate,schedule.scheduletime,schedule.nop from schedule inner join doctor on schedule.docid=doctor.docid  where schedule.scheduledate>='$today' and schedule.scheduledate<='$nextweek' order by schedule.scheduledate desc"; 
+                                            $sqlmain= "select exam.idexamen,exam.examendes,profesores.nombre,exam.fechaexamen,exam.hora,exam.capacidad from exam inner join profesores on exam.idexamen=profesores.proid  where exam.fechaexamen>='$today' and exam.fechaexamen<='$nextweek' order by exam.fechaexamen desc"; 
                                                 $result= $database->query($sqlmain);
                 
                                                 if($result->num_rows==0){
@@ -396,8 +387,8 @@
                                                     <img src="../img/notfound.svg" width="25%">
                                                     
                                                     <br>
-                                                    <p class="heading-main12" style="margin-left: 45px;font-size:20px;color:rgb(49, 49, 49)">We  couldnt find anything related to your keywords !</p>
-                                                    <a class="non-style-link" href="schedule.php"><button  class="login-btn btn-primary-soft btn"  style="display: flex;justify-content: center;align-items: center;margin-left:20px;">&nbsp; Show all Sessions &nbsp;</font></button>
+                                                    <p class="heading-main12" style="margin-left: 45px;font-size:20px;color:rgb(49, 49, 49)">No se ha encontrado resultados !</p>
+                                                    <a class="non-style-link" href="schedule.php"><button  class="login-btn btn-primary-soft btn"  style="display: flex;justify-content: center;align-items: center;margin-left:20px;">&nbsp; Ver todos los examenes &nbsp;</font></button>
                                                     </a>
                                                     </center>
                                                     <br><br><br><br>
@@ -408,12 +399,12 @@
                                                 else{
                                                 for ( $x=0; $x<$result->num_rows;$x++){
                                                     $row=$result->fetch_assoc();
-                                                    $scheduleid=$row["scheduleid"];
-                                                    $title=$row["title"];
-                                                    $docname=$row["docname"];
-                                                    $scheduledate=$row["scheduledate"];
-                                                    $scheduletime=$row["scheduletime"];
-                                                    $nop=$row["nop"];
+                                                    $scheduleid=$row["idexamen"];
+                                                    $title=$row["examendes"];
+                                                    $docname=$row["nombre"];
+                                                    $scheduledate=$row["fechaexamen"];
+                                                    $scheduletime=$row["hora"];
+                                                    $nop=$row["capacidad"];
                                                     echo '<tr>
                                                         <td style="padding:20px;"> &nbsp;'.
                                                         substr($title,0,30)
@@ -444,12 +435,12 @@
                             <tr>
                                 <td>
                                     <center>
-                                        <a href="appointment.php" class="non-style-link"><button class="btn-primary btn" style="width:85%">Show all Appointments</button></a>
+                                        <a href="appointment.php" class="non-style-link"><button class="btn-primary btn" style="width:85%">Ver Todas las inscripciones</button></a>
                                     </center>
                                 </td>
                                 <td>
                                     <center>
-                                        <a href="schedule.php" class="non-style-link"><button class="btn-primary btn" style="width:85%">Show all Sessions</button></a>
+                                        <a href="schedule.php" class="non-style-link"><button class="btn-primary btn" style="width:85%">Ver examenes</button></a>
                                     </center>
                                 </td>
                             </tr>

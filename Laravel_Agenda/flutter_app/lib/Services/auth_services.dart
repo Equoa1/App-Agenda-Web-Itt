@@ -6,13 +6,14 @@ import 'package:http/http.dart' as http;
 
 class AuthServices {
   static Future<http.Response> register(String folio, String matricula,
-      String name, String email, String password) async {
+      String name, String email, String password, String carrera) async {
     Map data = {
       "folio": folio,
       "matricula": matricula,
       "name": name,
       "email": email,
       "password": password,
+      "carrera": carrera
     };
     var body = json.encode(data);
     var url = Uri.parse(baseURL + 'auth/register');
@@ -29,7 +30,7 @@ class AuthServices {
   static Future<http.Response> login(String email, String password) async {
     Map data = {'email': email, 'password': password};
     var response = await http
-        .post(Uri.parse('http://192.168.1.78:8000/api/auth/login'), body: data);
+        .post(Uri.parse('http://192.168.1.77:8000/api/auth/login'), body: data);
 
     if (response.statusCode == 200) {
       final jsonData = json.decode(response.body);

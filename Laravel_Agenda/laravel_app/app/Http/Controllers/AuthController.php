@@ -10,24 +10,32 @@ use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {
-    public function exameninscrito($username)
-    {
-        $existingInscripcion = DB::table('inscripcion')
+
+
+    public function Editarperfil($username)
+   {
+   
+   }
+   public function exameninscrito($username)
+{
+    $existingInscripcion = DB::table('inscripcion')
         ->where('usuario_id', $username)
         ->first();
-        if($existingInscripcion)
-        {
-         
-            $examenesid = DB::select("SELECT * FROM inscripcion WHERE usuario_id = '$username'");
-          
-            return response()->json($examenesid,200);
-            
 
-        }
-       
+    if($existingInscripcion) {
+        $examenesid = DB::select("
+            SELECT i.*, e.hora
+            FROM inscripcion i
+            JOIN exam e ON i.examen_id = e.idexamen
+            WHERE i.usuario_id = '$username'
+        ");
 
-
+        return response()->json($examenesid, 200);
+    } else {
+        return response()->json([], 404);
     }
+}
+
     public function cancelarexamen($username)
     {
         $existingInscripcion = DB::table('inscripcion')
@@ -58,7 +66,8 @@ class AuthController extends Controller
             'matricula' => 'required|string',
             'name' => 'required|string',
             'email' => 'required|string|unique:users',
-            'password' => 'required|string|min:6'
+            'password' => 'required|string|min:6',
+            'carrera' => 'string'
         ];
         $validator = Validator::make($req->all(), $rules);
         if ($validator->fails()) {
@@ -70,7 +79,10 @@ class AuthController extends Controller
             'matricula' => $req->matricula,
             'name' => $req->name,
             'email' => $req->email,
-            'password' => Hash::make($req->password)
+            'password' => Hash::make($req->password),
+            'carrera' => $req->carrera,
+           
+
         ]);
         $token = $user->createToken('Personal Access Token')->plainTextToken;
         $response = ['user' => $user, 'token' => $token];
@@ -93,28 +105,25 @@ class AuthController extends Controller
             $response = ['user' => $user, 'token' => $token];
             return response()->json($response, 200);
         }
-        $response = ['message' => 'Incorrect email or password'];
+        $response = ['message' => 'Contraseña incorrecta'];
         return response()->json($response, 400);
     }
     public function exam(Request $req)
     {
         $existingInscripcion = DB::table('inscripcion')
-        ->where('usuario_id', $req->usuario_id)
-        ->where('examen_id', $req->examen_id)
-        
-        ->first();
+            ->where('usuario_id', $req->usuario_id)
+            ->where('examen_id', $req->examen_id)
+            ->first();
+    
         if ($existingInscripcion) {
             return response()->json(['message' => 'El usuario ya está inscrito a un examen'], 400);
+        } else {
+            $hoy = date('Y-m-d');
+            $examenes = DB::select("SELECT * FROM exam WHERE fechaexamen >= '$hoy'");
+            return response()->json($examenes, 200);
         }
-        else{
-          
-        $examenes = DB::select('SELECT * FROM exam');
-        return response()->json($examenes,200);
-        }
-       
-
-
     }
+    
     public function inscritos($username) {
         
         $inscritos = DB::table('inscripcion')
@@ -156,6 +165,7 @@ class AuthController extends Controller
 
         DB::table('inscripcion')->insert([
         'udi' => $user->id,
+        'carrera' => $user->carrera,
         'numerodecita' => $cantidad + 1,
         'usuario_id' => $req->usuario_id,
         'examen_id' => $req->examen_id,

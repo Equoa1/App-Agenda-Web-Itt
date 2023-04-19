@@ -25,19 +25,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
   String _password = '';
   String _name = '';
   String _folio = '';
+  String carrera = '';
 
   createAccountPressed() async {
+    print(carrera);
     bool emailValid = RegExp(
             r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
         .hasMatch(_email);
     if (emailValid) {
       http.Response response = await AuthServices.register(
-        _folio,
-        _matricula,
-        _name,
-        _email,
-        _password,
-      );
+          _folio, _matricula, _name, _email, _password, carrera);
       Map responseMap = jsonDecode(response.body);
       if (response.statusCode == 200) {
         Navigator.push(
@@ -142,6 +139,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
               onChanged: (value) {
                 _password = value;
+              },
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            TextField(
+              decoration: InputDecoration(
+                hintText: 'Carrera',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+              ),
+              onChanged: (value) {
+                carrera = value;
               },
             ),
             const SizedBox(
