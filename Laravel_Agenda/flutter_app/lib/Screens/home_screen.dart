@@ -3,6 +3,8 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'register_screen.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -15,6 +17,9 @@ class _HomeScreenState extends State<HomeScreen> {
   String _username = '';
   int _selectedIndex = 0;
   int index = 0;
+  final TextEditingController folioController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
   List<dynamic> examenes = [];
 
@@ -216,59 +221,83 @@ class _HomeScreenState extends State<HomeScreen> {
               leading: Icon(Icons.edit),
               title: Text('Editar Perfil'),
               onTap: () {
+                Navigator.pop(context);
                 showModalBottomSheet(
                   context: context,
                   builder: (BuildContext context) {
                     return Container(
                       padding: EdgeInsets.all(20.0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          TextField(
-                            decoration: InputDecoration(
-                              hintText: 'Folio',
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(30),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            TextField(
+                              controller: folioController,
+                              decoration: InputDecoration(
+                                hintText: 'Folio',
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
                               ),
                             ),
-                            onChanged: (value) {
-                              // Actualizar el valor del folio
-                            },
-                          ),
-                          SizedBox(height: 20.0),
-                          TextField(
-                            decoration: InputDecoration(
-                              hintText: 'Correo Electronico',
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(30),
+                            SizedBox(height: 10.0),
+                            TextField(
+                              controller: passwordController,
+                              obscureText: true,
+                              decoration: InputDecoration(
+                                hintText: 'Contraseña',
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
                               ),
+                              onChanged: (value) {},
                             ),
-                            onChanged: (value) {
-                              // Actualizar el valor del correo electrónico
-                            },
-                          ),
-                          SizedBox(height: 20.0),
-                          TextField(
-                            obscureText: true,
-                            decoration: InputDecoration(
-                              hintText: 'Contraseña',
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(30),
-                              ),
+                            SizedBox(height: 10.0),
+                            ElevatedButton(
+                              child: Text('Guardar Cambios'),
+                              onPressed: () async {
+                                var response = await http.post(
+                                  Uri.parse(
+                                      'http://192.168.1.77:8000/api/auth/editarperfil/$_username'),
+                                  body: {
+                                    'folio': folioController.text,
+                                    'password': passwordController.text,
+                                  },
+                                );
+
+                                if (response.statusCode == 200) {
+                                  Navigator.pop(context);
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: Text(
+                                            'Perfil actualizado exitosamente'),
+                                        actions: [
+                                          TextButton(
+                                            child: Text('Aceptar'),
+                                            onPressed: () =>
+                                                SystemNavigator.pop(),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                        content: Text('Perfil Actualizado')),
+                                  );
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => RegisterScreen()),
+                                  );
+                                }
+                              },
                             ),
-                            onChanged: (value) {
-                              // Actualizar el valor de la contraseña
-                            },
-                          ),
-                          SizedBox(height: 20.0),
-                          ElevatedButton(
-                            child: Text('Guardar Cambios'),
-                            onPressed: () {
-                              // Guardar los cambios en el perfil
-                              Navigator.pop(context);
-                            },
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     );
                   },
@@ -311,21 +340,22 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: ListTile(
                         leading: Icon(Icons.event),
                         title: Text(examen['examendes'],
-                            style: TextStyle(fontSize: 20, color: Colors.blue)),
+                            style: const TextStyle(
+                                fontSize: 20, color: Colors.blue)),
                         subtitle: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               'Fecha De Examen: ${examen['fechaexamen']}',
-                              style: TextStyle(color: Colors.black),
+                              style: const TextStyle(color: Colors.black),
                             ),
                             Text(
                               'Hora De Examen: ${examen['hora']}',
-                              style: TextStyle(color: Colors.black),
+                              style: const TextStyle(color: Colors.black),
                             ),
                             Text(
                               'Capacidad: ${examen['capacidad']}',
-                              style: TextStyle(color: Colors.black),
+                              style: const TextStyle(color: Colors.black),
                             ),
                           ],
                         ),

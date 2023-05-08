@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
+Route::post('/auth/editarperfil/{username}', [AuthController::class,'editarperfil'])->name('Editarperfil');
 Route::post('/auth/register', [AuthController::class, 'register']);
 Route::post('/auth/login', [AuthController::class, 'login']);
 Route::get('/auth/exam', [AuthController::class, 'exam']);

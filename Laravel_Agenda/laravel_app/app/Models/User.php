@@ -31,6 +31,9 @@ class User extends Authenticatable
         'email',
         'password',
         'carrera',
+        'apellidopaterno',
+        'apellidomaterno',
+        'genero',
 
     ];
 

@@ -24,17 +24,50 @@ class _RegisterScreenState extends State<RegisterScreen> {
   String _matricula = '';
   String _password = '';
   String _name = '';
+  String _apellidopaterno = '';
+  String _apellidomaterno = '';
   String _folio = '';
-  String carrera = '';
+  String carrera = 'Ing Arquitectura';
+  String _genero1 = 'Masculino'; // valor seleccionado en el dropdown
+  List<String> carreras = [
+    'Ing Arquitectura',
+    'Lic. en Administración',
+    'Contador Público',
+    'Ing. Aeronáutica',
+    'Ing. Ambiental',
+    'Ing. Biomédica',
+    'Ing. Bioquímica',
+    'Ing. Civil',
+    'Ing. en Diseño Industrial',
+    'Ing. Electromecánica',
+    'Ing. Electrónica',
+    'Ing. en Gestión Empresarial',
+    'Ing. Informática',
+    'Ing. en Logística',
+    'Ing. en Nanotecnología',
+    'Ing. en Sistemas Computacionales',
+    'Ing. Industrial',
+    'Ing. Química',
+    'Ing. Mecánica',
+  ];
+
+  List<String> _Generos = ['Masculino', 'Femenino'];
 
   createAccountPressed() async {
-    print(carrera);
     bool emailValid = RegExp(
             r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
         .hasMatch(_email);
     if (emailValid) {
       http.Response response = await AuthServices.register(
-          _folio, _matricula, _name, _email, _password, carrera);
+          _folio,
+          _matricula,
+          _name,
+          _email,
+          _password,
+          carrera,
+          _apellidopaterno,
+          _apellidomaterno,
+          _genero1);
       Map responseMap = jsonDecode(response.body);
       if (response.statusCode == 200) {
         Navigator.push(
@@ -71,7 +104,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         child: Column(
           children: [
             const SizedBox(
-              height: 25,
+              height: 15,
             ),
             TextField(
               decoration: InputDecoration(
@@ -85,7 +118,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               },
             ),
             const SizedBox(
-              height: 20,
+              height: 10,
             ),
             TextField(
               decoration: InputDecoration(
@@ -99,11 +132,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
               },
             ),
             const SizedBox(
-              height: 20,
+              height: 10,
             ),
             TextField(
+              textCapitalization: TextCapitalization.words,
               decoration: InputDecoration(
-                hintText: 'Nombre Completo',
+                hintText: 'Nombre',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(30),
                 ),
@@ -113,7 +147,37 @@ class _RegisterScreenState extends State<RegisterScreen> {
               },
             ),
             const SizedBox(
-              height: 30,
+              height: 10,
+            ),
+            TextField(
+              textCapitalization: TextCapitalization.words,
+              decoration: InputDecoration(
+                hintText: 'Apellido Paterno',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+              ),
+              onChanged: (value) {
+                _apellidopaterno = value;
+              },
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            TextField(
+              textCapitalization: TextCapitalization.words,
+              decoration: InputDecoration(
+                hintText: 'Apellido Materno',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+              ),
+              onChanged: (value) {
+                _apellidomaterno = value;
+              },
+            ),
+            const SizedBox(
+              height: 10,
             ),
             TextField(
               decoration: InputDecoration(
@@ -127,7 +191,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               },
             ),
             const SizedBox(
-              height: 30,
+              height: 10,
             ),
             TextField(
               obscureText: true,
@@ -142,21 +206,49 @@ class _RegisterScreenState extends State<RegisterScreen> {
               },
             ),
             const SizedBox(
-              height: 20,
+              height: 10,
             ),
-            TextField(
-              decoration: InputDecoration(
-                hintText: 'Carrera',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
-              ),
-              onChanged: (value) {
-                carrera = value;
+            DropdownButtonFormField<String>(
+              value: carrera,
+              dropdownColor: Colors.white,
+              items: carreras.map((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Text(value, textAlign: TextAlign.left),
+                  ),
+                );
+              }).toList(),
+              onChanged: (String? value) {
+                setState(() {
+                  carrera = value!;
+                });
               },
             ),
             const SizedBox(
-              height: 20,
+              height: 10,
+            ),
+            DropdownButtonFormField<String>(
+              value: _genero1,
+              dropdownColor: Colors.white,
+              items: _Generos.map((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Text(value, textAlign: TextAlign.left),
+                  ),
+                );
+              }).toList(),
+              onChanged: (String? value) {
+                setState(() {
+                  _genero1 = value!;
+                });
+              },
+            ),
+            const SizedBox(
+              height: 10,
             ),
             RoundedButton(
               btnText: 'Crear Cuenta',

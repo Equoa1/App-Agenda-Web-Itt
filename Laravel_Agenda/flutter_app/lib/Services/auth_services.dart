@@ -5,15 +5,26 @@ import 'package:flutterapp/Services/globals.dart';
 import 'package:http/http.dart' as http;
 
 class AuthServices {
-  static Future<http.Response> register(String folio, String matricula,
-      String name, String email, String password, String carrera) async {
+  static Future<http.Response> register(
+      String folio,
+      String matricula,
+      String name,
+      String email,
+      String password,
+      String carrera,
+      String apellidopaterno,
+      String apellidomaterno,
+      String genero) async {
     Map data = {
       "folio": folio,
       "matricula": matricula,
       "name": name,
       "email": email,
       "password": password,
-      "carrera": carrera
+      "carrera": carrera,
+      "apellidopaterno": apellidopaterno,
+      "apellidomaterno": apellidomaterno,
+      "genero": genero,
     };
     var body = json.encode(data);
     var url = Uri.parse(baseURL + 'auth/register');

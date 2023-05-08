@@ -12,10 +12,24 @@ class AuthController extends Controller
 {
 
 
-    public function Editarperfil($username)
-   {
-   
-   }
+    public function editarperfil(Request $request, $username)
+    {
+        $user = User::where('matricula', $username)->first();
+        if($user)
+        { 
+        $user->folio = $request->input('folio');
+        $user->password = Hash::make($request->input('password'));
+        $user->save();
+        return redirect()->back()->with('success', 'Perfil actualizado exitosamente.');
+
+        }
+    
+    else{
+        return response()->json([], 400);
+
+    }
+    }
+    
    public function exameninscrito($username)
 {
     $existingInscripcion = DB::table('inscripcion')
@@ -67,7 +81,10 @@ class AuthController extends Controller
             'name' => 'required|string',
             'email' => 'required|string|unique:users',
             'password' => 'required|string|min:6',
-            'carrera' => 'string'
+            'carrera' => 'string',
+            'apellidopaterno' => 'required|string',
+            'apellidomaterno' => 'required|string',
+            'genero' => 'required|string'
         ];
         $validator = Validator::make($req->all(), $rules);
         if ($validator->fails()) {
@@ -81,6 +98,9 @@ class AuthController extends Controller
             'email' => $req->email,
             'password' => Hash::make($req->password),
             'carrera' => $req->carrera,
+            'apellidopaterno' => $req->apellidopaterno,
+            'apellidomaterno' => $req->apellidomaterno,
+            'genero' => $req->genero,
            
 
         ]);

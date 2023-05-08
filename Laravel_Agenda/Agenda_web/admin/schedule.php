@@ -322,7 +322,7 @@
 
                                         <td>
                                         <div style="display:flex;justify-content: center;">
-                                        <a href="?action=download&id='.$scheduleid.'" class="non-style-link">
+                                        <a href="download.php?id='.$scheduleid.'" class="non-style-link">
                                         <button class="btn-primary-soft btn button-icon btn-print" style="padding-left: 40px; padding-top: 12px; padding-bottom: 12px; margin-top: 10px;">
                                         <font class="tn-in-text">Descargar</font>
                                         </button>
@@ -600,7 +600,7 @@
 
                             
                             <tr>
-                            <td colspan="4">
+                            <td colspan="6">
                                 <center>
                                  <div class="abc scroll">
                                  <table width="100%" class="sub-table scrolldown" border="0">
@@ -610,8 +610,14 @@
                                             Matricula
                                          </th>
                                          <th class="table-headin">
-                                             Nombre Del Alumno
+                                             Nombre 
                                          </th>
+                                         <th class="table-headin">
+                                         Apellido Paterno
+                                       </th>
+                                       <th class="table-headin">
+                                      Apellido Materno
+                                       </th>
                                          <th class="table-headin">
                                              
                                              Numero De Agendado
@@ -657,6 +663,8 @@
                                              $apponum=$row["numerodecita"];
                                              $folio=$row["folio"];
                                              $pname=$row["name"];
+                                             $apellidopaterno=$row["apellidopaterno"];
+                                             $apellidomaterno=$row["apellidomaterno"];
                                              $pmatricula=$row["matricula"];
                                              $carrera=$row["carrera"];
                                              
@@ -668,9 +676,14 @@
                                                  
                                                  substr($pname,0,25)
                                                  .'</td >
-                                                 <td style="text-align:center;font-size:23px;font-weight:500; color: var(--btnnicetext);">
-                                                 '.$apponum.'
-                                                 
+                                                 <td style="text-align:center;font-weight:500;">
+                                                 '.substr($apellidopaterno,0,25).'
+                                                 </td>
+                                                 <td>
+                                                 '.substr($apellidomaterno,0,25).'
+                                                 </td>
+                                                 <td>
+                                                 '.substr($apponum,0,25).'
                                                  </td>
                                                  <td>
                                                  '.substr($folio,0,25).'

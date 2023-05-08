@@ -1,0 +1,8 @@
+<VirtualHost *:80>
+    ServerName mylaravelapp.local
+    DocumentRoot "C:/xampp/htdocs/mylaravelapp/public"
+    <Directory "C:\xampp\htdocs\xampp\App-Agenda-Web-Itt\Laravel_Agenda\laravel_app\public">
+        AllowOverride All
+        Require all granted
+    </Directory>
+</VirtualHost>
