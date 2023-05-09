@@ -123,13 +123,13 @@
         <table border="0" style="margin: 0;padding: 0;width: 60%;">
             <tr>
                 <td>
-                    <p class="header-text">Welcome Back!</p>
+                    <p class="header-text">Bienvenido!</p>
                 </td>
             </tr>
         <div class="form-body">
             <tr>
                 <td>
-                    <p class="sub-text">Login with your details to continue</p>
+                    <p class="sub-text">Ingresa Tus Datos</p>
                 </td>
             </tr>
             <tr>
@@ -171,8 +171,7 @@
             <tr>
                 <td>
                     <br>
-                    <label for="" class="sub-text" style="font-weight: 280;">Don't have an account&#63; </label>
-                    <a href="signup.php" class="hover-link1 non-style-link">Sign Up</a>
+                   
                     <br><br><br>
                 </td>
             </tr>
