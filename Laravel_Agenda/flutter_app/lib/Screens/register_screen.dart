@@ -210,68 +210,80 @@ class _RegisterScreenState extends State<RegisterScreen> {
             ),
             DropdownButtonFormField<String>(
               value: carrera,
-              dropdownColor: Colors.white,
-              items: carreras.map((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Text(value, textAlign: TextAlign.left),
-                  ),
-                );
-              }).toList(),
-              onChanged: (String? value) {
+              decoration: InputDecoration(
+                hintText: 'Carrera',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+              ),
+              onChanged: (value) {
                 setState(() {
                   carrera = value!;
                 });
               },
+              items: carreras.map((carrera) {
+                return DropdownMenuItem<String>(
+                  value: carrera,
+                  child: Text(carrera),
+                );
+              }).toList(),
             ),
             const SizedBox(
               height: 10,
             ),
             DropdownButtonFormField<String>(
               value: _genero1,
-              dropdownColor: Colors.white,
-              items: _Generos.map((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Text(value, textAlign: TextAlign.left),
-                  ),
-                );
-              }).toList(),
-              onChanged: (String? value) {
+              decoration: InputDecoration(
+                hintText: 'Género',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+              ),
+              onChanged: (value) {
                 setState(() {
                   _genero1 = value!;
                 });
               },
+              items: _Generos.map((genero) {
+                return DropdownMenuItem<String>(
+                  value: genero,
+                  child: Text(genero),
+                );
+              }).toList(),
             ),
             const SizedBox(
-              height: 10,
+              height: 20,
             ),
             RoundedButton(
               btnText: 'Crear Cuenta',
               onBtnPressed: () => createAccountPressed(),
             ),
             const SizedBox(
-              height: 40,
+              height: 20,
             ),
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (BuildContext context) => const LoginScreen(),
-                    ));
-              },
-              child: const Text(
-                'Tienes Cuenta?',
-                style: TextStyle(
-                  decoration: TextDecoration.underline,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                const Text('¿Ya tienes una cuenta? '),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              const LoginScreen(),
+                        ));
+                  },
+                  child: const Text(
+                    'Inicia Sesión',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.blue,
+                    ),
+                  ),
                 ),
-              ),
-            )
+              ],
+            ),
           ],
         ),
       ),
