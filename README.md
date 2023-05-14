@@ -1,6 +1,6 @@
 # Skate
 # Preview Img
-![preview img](App-Agenda-Web-Itt\Laravel_Agenda\img\1.jpg)
+![preview img](Laravel_Agenda/img/1.jpg)
 # ----------------------------------------------------------------
 ![preview img](img/skatecss2.jfif)
 
